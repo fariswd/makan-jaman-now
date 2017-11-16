@@ -7,17 +7,24 @@ function checkWeather(req,res) {
 	.end(function (result) {
 		// res.send(result.status, result.headers, result.body)
 		let keepWeather = result.body.split(" ");
-		keepWeather.forEach(checkWeather => {
+		let getWeather = false;
+		keepWeather.forEach((checkWeather,index) => {
 			let weather = checkWeather.toLowerCase();
-			if(weather == "rain" || weather == "thunderstorms"){
+			if(weather == "rain" || weather == "thunderstorms" && getWeather == false ){
+				getWeather = true;
 				res.send({message : "Hujan Cuy , kalo nekat pakai jas hujan cuy", weather :result.body})
-			}else if(weather == "snow"){
+			}else if(weather == "snow" && getWeather == false ){
+				getWeather = true;
 				res.send({message : "Salju Cuy Dingin beud", weather :result.body})
-			}else if(weather == "unknown"){
+			}else if(weather == "unknown" && getWeather == false ){
+				getWeather = true;
 				res.send({message : "Sorry cuy Cuacanya Unknown ga Jelas", weather :result.body})
+			}
+			if(index == keepWeather.length-1 && getWeather == false){
+				getWeather = true;
+				res.send({message : "Cuacanya aman cuy", weather :result.body})
 			}								
 		})
-		res.send({message : "Cuacanya aman cuy", weather :result.body})
 	});	
 }
 
