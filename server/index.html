@@ -18,6 +18,22 @@
   </div>
 </body>
 <script>
+  //get weather
+  function getWeather(long, lat, cb){
+    $.ajax({
+      url: `http://localhost:3000/weather/${lat}/${long}`,
+      method: 'get',
+      dataType: 'json',
+      success: function(data){
+        console.log(data);
+        cb(data)
+      },
+      fail: function(xhr, msg){
+        //err here
+      }
+    })
+  }
+
   //get timeline
   $("button.search").click(function(){
     let search = $('input[name="searchZomato"]').val()
@@ -27,23 +43,24 @@
       dataType: 'json',
       success: function(data){
         let restaurants = data.restaurants
-        console.log(restaurants);
         $("div.zomatoResult").empty();
         restaurants.forEach(r=>{
           console.log(r);
-          //data here
-          let panel = `
-          <div class="container">
-            <img src="${r.restaurant.thumb}"><br>
-            Name: ${r.restaurant.name}<br>
-            Url: ${r.restaurant.url}<br>
-            Address: ${r.restaurant.location.address}<br>
-            Lat:  ${r.restaurant.location.latitude}<br>
-            Lng:  ${r.restaurant.location.longitude}<br>
-            Status: nanti disini prediksi cuaca
-          </div>
-          `
-          $("div.zomatoResult").append(panel)
+          // getWeather(r.restaurant.location.longitude, r.restaurant.location.latitude, weather=>{
+            //data here
+            let panel = `
+            <div class="container">
+              <img src="${r.restaurant.thumb}"><br>
+              Name: ${r.restaurant.name}<br>
+              Url: ${r.restaurant.url}<br>
+              Address: ${r.restaurant.location.address}<br>
+              Lat:  ${r.restaurant.location.latitude}<br>
+              Lng:  ${r.restaurant.location.longitude}<br>
+            </div>
+            `
+            $("div.zomatoResult").append(panel)
+          // })
+
         })
       },
       fail: function(xhr, msg){
