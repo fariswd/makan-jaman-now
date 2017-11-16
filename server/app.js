@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 const unirest = require('unirest');
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost:27017/makan')
 
 app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()) // parse application/json
@@ -21,6 +23,12 @@ app.use('/', weather)
 
 //zomato API
 app.use('/api/zomato', zomato)
+const user = require('./routers/user')
+// const index = require('./routers/userFb')
+
+app.use('/', index)
+app.use('/user', user)
+// app.use('/userFb',userFb)
 
 //listen
 app.listen(3000, () => console.log('Port 3000!'))

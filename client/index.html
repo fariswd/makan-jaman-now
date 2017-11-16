@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>  
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+  <script src="js/script.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <h1>halo</h1>
+  <!-- <div class="login-form" id="login">
+    <input class="btn" type="button" value="Login with facebook" id="send" onclick="loginFB()">
+  <div class="btn" onclick="loginFB()">Login with facebook</div> -->
+  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+  </fb:login-button>
+  
+  <div
+  class="fb-login-button"
+  data-max-rows="1"
+  data-size="<medium, large>"
+  data-button-type="continue_with"
+  data-width="<100% or px>"
+  data-scope="<comma separated list of permissions, e.g. public_profile, email>"
+></div>
+  <div id="status">
+  </div>
+</body>
+</html>
