@@ -10,11 +10,13 @@ app.use(cors())
 
 //routers
 const index = require('./routers/index')
-const zomato = require('./routers/zomato')
 const weather = require('./routers/weather')
+const zomato = require('./routers/zomato')
 
 //index
 app.use('/', index)
+
+//weather API
 app.use('/', weather)
 
 //zomato API
