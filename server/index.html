@@ -19,7 +19,7 @@
 </body>
 <script>
   //get weather
-  function getWeather(long, lat, cb){
+  function getWeather(lat, long, cb){
     $.ajax({
       url: `http://localhost:3000/weather/${lat}/${long}`,
       method: 'get',
