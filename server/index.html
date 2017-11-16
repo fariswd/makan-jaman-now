@@ -35,21 +35,6 @@
   }
 
   //get timeline
-
-  function getWeather(lat,long, cb) {
-    $.ajax({
-      url: ` http://localhost:3000/weather/${lat}/${long}`,
-      method: 'get',
-      dataType: 'json',
-      success: function(data){
-        cb(data);
-      },
-      fail: function(xhr, msg){
-        //err here
-      }
-    })  
-  }
-
   $("button.search").click(function(){
     let search = $('input[name="searchZomato"]').val()
     $.ajax({
