@@ -9,11 +9,13 @@ app.use(cors())
 
 //routers
 const index = require('./routers/index')
-
+const zomato = require('./routers/zomato')
 
 //index
 app.use('/', index)
 
+//zomato API
+app.use('/api/zomato', zomato)
 
 //listen
 app.listen(3000, () => console.log('Port 3000!'))
