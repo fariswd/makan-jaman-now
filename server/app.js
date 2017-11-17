@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -24,11 +25,12 @@ app.use('/', weather)
 //zomato API
 app.use('/api/zomato', zomato)
 const user = require('./routers/user')
-// const index = require('./routers/userFb')
+const userfb = require('./routers/userFb')
 
 app.use('/', index)
-app.use('/user', user)
-// app.use('/userFb',userFb)
+//fbLogin
+app.use('/api/login', userfb)
+// app.use('/user',userFb)
 
 //listen
-app.listen(3000, () => console.log('Port 3000!'))
+app.listen(3001, () => console.log('Port 3001!'))

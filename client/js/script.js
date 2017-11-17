@@ -20,28 +20,36 @@ function logoutFB(){
 }
 
 function statusChangeCallback(response) {
-  console.log('statusChangeCallback');
-  console.log(response);
-  if (response.status === 'connected') {
-    testAPI();
-    $.ajax({
-      type: "post",
-      url : "http://localhost:3000",
-      data: {
-        token: response.authResponse.accessToken
-      },
-      success: function(result){
-        let auth ={
-          id:result.id,
-          name:result.name,
-          accessToken: result.token
-        }
-        localStorage.setItem('autentifikasi', JSON.stringify(auth))
-      }
-    })
-  } else{
+  // console.log('statusChangeCallback');
+  // console.log(response);
+  axios.post('http://localhost:3001/api/login',{},{headers:{token:response.authResponse.accessToken , id: response.authResponse.userID}})
+  .then(function (rsponse){
+    localStorage.setItem('jwtToken',rsponse.data.token)
+    localStorage.setItem('name', rsponse.data.name)
+  })
+  .catch(function(err){
+    console.log(err);
+  })
+  // if (response.status === 'connected') {
+  //   testAPI();
+  //   $.ajax({
+  //     type: "post",
+  //     url : "http://localhost:3001/api/login",
+  //     data: {
+  //       token: response.authResponse.accessToken
+  //     },
+  //     success: function(result){
+  //       let auth ={
+  //         id:result.id,
+  //         name:result.name,
+  //         accessToken: result.token
+  //       }
+  //       localStorage.setItem('autentifikasi', JSON.stringify(auth))
+  //     }
+  //   })
+  // } else{
 
-  }
+  // }
   // else {
   //   document.getElementById('status').innerHTML = 'Please log ' +
   //     'into this app.';
@@ -65,6 +73,7 @@ FB.init({
 
 FB.getLoginStatus(function(response) {
   statusChangeCallback(response);
+  console.log(response);
 });
 
 };
@@ -87,5 +96,5 @@ function testAPI() {
 }
 $(document).ready(function(){
   let status = false
-  let token = localStorage
+  let token = localStorage.getItem
 })

@@ -4,28 +4,99 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>  
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
-  <script src="js/script.js"></script>
   <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js" charset="utf-8"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.css">
+  <script src="js/script.js"></script>
 </head>
 <body>
-  <h1>halo</h1>
-  <!-- <div class="login-form" id="login">
-    <input class="btn" type="button" value="Login with facebook" id="send" onclick="loginFB()">
-  <div class="btn" onclick="loginFB()">Login with facebook</div> -->
-  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-  </fb:login-button>
+  <h1>Selamat Datang</h1>
   
-  <div
-  class="fb-login-button"
-  data-max-rows="1"
-  data-size="<medium, large>"
-  data-button-type="continue_with"
-  data-width="<100% or px>"
-  data-scope="<comma separated list of permissions, e.g. public_profile, email>"
-></div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+      <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+        </fb:login-button>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" name="searchZomato" type="text" placeholder="Search">
+        <button class='search' class="btn btn-secondary my-2 my-sm-0"  name="button" type="button">Search</button>
+      </form>
+    </div>
+  </nav>
+  <!-- <input type="text" name="searchZomato" value="" placeholder="cari makanan">
+  <button type="button" class='search' name="button">Search</button> -->
+  <div class="card text-white bg-success">
+    <div class="col-md-12"></div>
+    <div class="zomatoResult">
+        <div >
+      <blockquote class="card-blockquote">
+        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+        <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer> -->
+      </blockquote>
+    </div>
+  </div>
   <div id="status">
+    </div>
+    <!-- zomato result here -->
   </div>
 </body>
+<script>
+  //get weather
+  function getWeather(long, lat, cb){
+    $.ajax({
+      url: `http://localhost:3000/weather/${lat}/${long}`,
+      method: 'get',
+      dataType: 'json',
+      success: function(data){
+        console.log(data);
+        cb(data)
+      },
+      fail: function(xhr, msg){
+        //err here
+      }
+    })
+  }
+
+  //get timeline
+  $("button.search").click(function(){
+    let search = $('input[name="searchZomato"]').val()
+    $.ajax({
+      url: `http://localhost:3000/api/zomato?q=${search}`,
+      method: 'get',
+      dataType: 'json',
+      success: function(data){
+        let restaurants = data.restaurants
+        $("div.zomatoResult").empty();
+        restaurants.forEach(r=>{
+          console.log(r);
+          getWeather(r.restaurant.location.latitude,r.restaurant.location.longitude, weather => {
+          let panel = `
+          <div class="container">
+            <img src="${r.restaurant.thumb}"><br>
+            Name: ${r.restaurant.name}<br>
+            Url: ${r.restaurant.url}<br>
+            Address: ${r.restaurant.location.address}<br>
+            Lat:  ${r.restaurant.location.latitude}<br>
+            Lng:  ${r.restaurant.location.longitude}<br>
+            Status: ${weather.message}
+          </div>
+          `
+          $("div.zomatoResult").append(panel)
+          })
+        })
+      },
+      fail: function(xhr, msg){
+        //err here
+      }
+    })
+  }); 
+</script>
+
 </html>
