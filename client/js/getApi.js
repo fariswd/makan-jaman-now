@@ -44,18 +44,24 @@ function getZomato(num){
       $("div.zomatoResult").empty();
       if(restaurants.length>0){
         restaurants.forEach(r=>{
-          // console.log(r);
           getWeather(r.location.latitude,r.location.longitude, weather => {
           let panel = `
           <div class="container">
-            <img src="${r.thumb}"><br>
-            Name: ${r.name}<br>
-            Url: ${r.url}<br>
-            Address: ${r.location.address}<br>
-            Lat:  ${r.location.latitude}<br>
-            Lng:  ${r.location.longitude}<br>
-            Status: ${weather.message}<br>
-            Lokasi: ${weather.weather}
+            <table>
+              <tr>
+                <td>
+                  <img src="${r.thumb}">
+                <td>
+                <td>
+                  Name: ${r.name}<br>
+                  Status: <h3>${weather.message}</h3>
+                  Weather Location: <h4>${weather.weather}</h4>
+                  Address: ${r.location.address}<br>
+                  Lat:  ${r.location.latitude}<br>
+                  Lng:  ${r.location.longitude}<br>
+                <td>
+              </tr>
+            </table>  
           </div>
           `
           $("div.zomatoResult").append(panel)

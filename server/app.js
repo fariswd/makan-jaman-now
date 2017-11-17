@@ -33,4 +33,4 @@ app.use('/api/login', userfb)
 // app.use('/user',userFb)
 
 //listen
-app.listen(3001, () => console.log('Port 3001!'))
+app.listen(3000, () => console.log('Port 3000!'))

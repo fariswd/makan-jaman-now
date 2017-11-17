@@ -9,6 +9,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.css">
   <script src="js/script.js"></script>
+  <script src="js/getApi.js"></script>
 </head>
 <body>
   <h1>Selamat Datang</h1>
@@ -19,35 +20,31 @@
       <span class="navbar-toggler-icon"></span>
     </button>
   
-    <div class="collapse navbar-collapse" id="navbarColor02">
+    <div class="collapse navbar-collapse" id="navbarColor02"> 
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-      <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+      <fb:login-button autologoutlink='true' scope="public_profile,email" id="login" onlogin="checkLoginState()">
         </fb:login-button>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" name="searchZomato" type="text" placeholder="Search">
-        <button class='search' class="btn btn-secondary my-2 my-sm-0"  name="button" type="button">Search</button>
+        <button class='search' class="btn btn-secondary my-2 my-sm-0"  name="button" type="button" onclick='getZomato()'>Search</button>
+    
+        <button class='search' type="button" value="0" class='next' onclick='getPagging()'>Next</button>
       </form>
     </div>
   </nav>
   <!-- <input type="text" name="searchZomato" value="" placeholder="cari makanan">
   <button type="button" class='search' name="button">Search</button> -->
   <div class="card text-white bg-success">
-    <div class="col-md-12"></div>
-    <div class="zomatoResult">
-        <div >
-      <blockquote class="card-blockquote">
-        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-        <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer> -->
-      </blockquote>
-    </div>
+  <div class="col-md-12"></div>
+  <div class="zomatoResult">
+    <!-- zomato result here -->
   </div>
   <div id="status">
     </div>
-    <!-- zomato result here -->
   </div>
 </body>
-<script>
+<!-- <script>
   //get weather
   function getWeather(long, lat, cb){
     $.ajax({
@@ -97,6 +94,6 @@
       }
     })
   }); 
-</script>
+</script> -->
 
 </html>

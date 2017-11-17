@@ -1,10 +1,10 @@
 function loginFB(){
   FB.login(function(rensponse){
       if(rensponse.status == "unknown"){
-          $('#login').show()
+          $('#fb:login').show()
           
       } else {
-          $('#login').hide()
+          $('fb:login').hide()
       }
   })
 }
@@ -22,7 +22,7 @@ function logoutFB(){
 function statusChangeCallback(response) {
   // console.log('statusChangeCallback');
   // console.log(response);
-  axios.post('http://localhost:3001/api/login',{},{headers:{token:response.authResponse.accessToken , id: response.authResponse.userID}})
+  axios.post('http://localhost:3000/api/login',{},{headers:{token:response.authResponse.accessToken , id: response.authResponse.userID}})
   .then(function (rsponse){
     localStorage.setItem('jwtToken',rsponse.data.token)
     localStorage.setItem('name', rsponse.data.name)
@@ -58,7 +58,13 @@ function statusChangeCallback(response) {
 
 function checkLoginState() {
   FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
+    if(response.status == 'connected'){
+      showSearchBar()
+      statusChangeCallback(response);
+    }else{
+      hideSearchBar()
+      statusChangeCallback(response);
+    } 
   });
 }
 
@@ -72,8 +78,15 @@ FB.init({
 });
 
 FB.getLoginStatus(function(response) {
-  statusChangeCallback(response);
-  console.log(response);
+  
+  if(response.status != 'connected'){
+    hideSearchBar()
+    statusChangeCallback(response);
+  }else{
+    // showSearchBar()
+    statusChangeCallback(response);
+  }
+  console.log(response.status);
 });
 
 };
@@ -92,9 +105,22 @@ function testAPI() {
     console.log('Successful login for: ' + response.name);
     document.getElementById('status').innerHTML =
       'Thanks for logging in, ' + response.name + '!';
+    showSearchBar()
   });
 }
 $(document).ready(function(){
   let status = false
   let token = localStorage.getItem
 })
+
+function hideSearchBar(){
+  // input class="form-control mr-sm-2"
+  $('input.form-control').hide()
+  $('button.search').hide()
+}
+
+function showSearchBar(){
+  // input class="form-control mr-sm-2"
+  $('input.form-control').show()
+  $('button.search').show()
+}
