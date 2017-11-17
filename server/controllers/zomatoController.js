@@ -2,7 +2,7 @@ const zomatoModel = require('../models/zomato')
 
 /* 
 * get search from zomato
-* require: query 'q'
+* require: query 'q', 'start'
 * method: GET
 * return obj
 * header: "Accept: application/json"
@@ -10,9 +10,16 @@ const zomatoModel = require('../models/zomato')
 * url:    "https://developers.zomato.com/api/v2.1/search?q=ayam%20bakar"
 */
 let search = (req, res) => {
-  zomatoModel.searchRestaurants(req.query.q, response=>{
-    res.send(response);
-  }) 
+  console.log(req.query.start);
+  if(req.query.start != ''){
+    zomatoModel.searchRestaurants(req.query.q, req.query.start, response=>{
+      res.send(response);
+    }) 
+  } else {
+    zomatoModel.searchRestaurants(req.query.q, 0, response=>{
+      res.send(response);
+    })
+  }
 }
 
 module.exports = {

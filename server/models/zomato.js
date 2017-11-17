@@ -1,8 +1,9 @@
 const unirest = require('unirest');
 require('dotenv').config()
 
-const searchRestaurants = (keyword, cb) => {
-  unirest.get(`https://developers.zomato.com/api/v2.1/search?q=${keyword}`)
+const searchRestaurants = (keyword, start, cb) => {
+  console.log(start);
+  unirest.get(`https://developers.zomato.com/api/v2.1/search?q=${keyword}&start=${start}`)
   .headers({
     'Accept': 'application/json',
     "user-key": process.env.API_ZOMATO,
@@ -14,7 +15,6 @@ const searchRestaurants = (keyword, cb) => {
     let newrestaurant = []
 
     result.restaurants.forEach((r, i)=>{
-      console.log(r.restaurant.thumb);
       if(r.restaurant.thumb != ""){
         newrestaurant.push(r.restaurant)
       }
