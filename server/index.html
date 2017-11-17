@@ -44,23 +44,33 @@
       success: function(data){
         let restaurants = data.newrestaurant
         $("div.zomatoResult").empty();
-        restaurants.forEach(r=>{
-          // console.log(r);
-          getWeather(r.location.latitude,r.location.longitude, weather => {
+        if(restaurants.length>0){
+          restaurants.forEach(r=>{
+            // console.log(r);
+            getWeather(r.location.latitude,r.location.longitude, weather => {
+            let panel = `
+            <div class="container">
+              <img src="${r.thumb}"><br>
+              Name: ${r.name}<br>
+              Url: ${r.url}<br>
+              Address: ${r.location.address}<br>
+              Lat:  ${r.location.latitude}<br>
+              Lng:  ${r.location.longitude}<br>
+              Status: ${weather.message}<br>
+              Lokasi: ${weather.weather}
+            </div>
+            `
+            $("div.zomatoResult").append(panel)
+            })
+          })
+        } else {
           let panel = `
           <div class="container">
-            <img src="${r.thumb}"><br>
-            Name: ${r.name}<br>
-            Url: ${r.url}<br>
-            Address: ${r.location.address}<br>
-            Lat:  ${r.location.latitude}<br>
-            Lng:  ${r.location.longitude}<br>
-            Status: ${weather.message}
+            Mohon maaf tidak ada di database kami
           </div>
           `
           $("div.zomatoResult").append(panel)
-          })
-        })
+        }
       },
       fail: function(xhr, msg){
         //err here

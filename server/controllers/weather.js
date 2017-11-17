@@ -10,9 +10,12 @@ function checkWeather(req,res) {
 		let getWeather = false;
 		keepWeather.forEach((checkWeather,index) => {
 			let weather = checkWeather.toLowerCase();
-			if(weather == "rain" || weather == "thunderstorms" && getWeather == false ){
+			if(weather == "rain" && getWeather == false ){
 				getWeather = true;	
 				res.send({message : "Hujan Cuy , kalo nekat pakai jas hujan cuy", weather :result.body})
+			}else if(weather == "thunderstorms" && getWeather == false ){
+				getWeather = true;	
+				res.send({message : "Mendung Cuy , bawa payung", weather :result.body})
 			}else if(weather == "snow" && getWeather == false ){
 				getWeather = true;
 				res.send({message : "Salju Cuy Dingin beud", weather :result.body})
