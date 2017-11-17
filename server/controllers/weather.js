@@ -1,11 +1,8 @@
-const unirest = require('unirest');
+const Model = require('../models/weather')
 
 function checkWeather(req,res) {
-	unirest.get(`https://simple-weather.p.mashape.com/weather?lat=${req.params.lat}&lng=${req.params.lng}`)
-	.header("X-Mashape-Key", "uKmy6kzlGqmshyW832nbPPsNiTZvp1CbC6AjsnTnGJCRaTvjxs")
-	.header("Accept", "text/plain")
-	.end(function (result) {
-		// res.send(result.status, result.headers, result.body)
+	Model.getWeather(req.params.lat,req.params.lng).then(result => {
+		console.log(result);
 		let keepWeather = result.body.split(" ");
 		let getWeather = false;
 		keepWeather.forEach((checkWeather,index) => {
@@ -25,7 +22,9 @@ function checkWeather(req,res) {
 				res.send({message : "Cuacanya aman cuy", weather :result.body})
 			}								
 		})
-	});	
+	}).catch(err => {
+		console.log(err)
+	})
 }
 
 module.exports = {
