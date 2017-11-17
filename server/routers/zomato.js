@@ -6,4 +6,6 @@ const zomato = require('../controllers/zomatoController')
 
 router.get('/', zomato.search)
 
+router.get('/search/', zomato.logSearch)
+
 module.exports = router

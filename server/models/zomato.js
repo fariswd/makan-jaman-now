@@ -2,7 +2,6 @@ const unirest = require('unirest');
 require('dotenv').config()
 
 const searchRestaurants = (keyword, start, cb) => {
-  console.log(start);
   unirest.get(`https://developers.zomato.com/api/v2.1/search?q=${keyword}&start=${start}`)
   .headers({
     'Accept': 'application/json',

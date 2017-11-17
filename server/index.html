@@ -82,6 +82,7 @@
             $("div.zomatoResult").append(panel)
             })
           })
+          updateSearch(search)
         } else {
           let panel = `
           <div class="container">
@@ -99,6 +100,22 @@
         </div>
         `
         $("div.zomatoResult").append(panel)
+      }
+    })
+  }
+
+  function updateSearch(keyword){
+    $.ajax({
+      url: `http://localhost:3000/api/zomato/search?keyword=${keyword}`,
+      method: 'get',
+      dataType: 'json',
+      success: function(data){
+        //success here
+        console.log('created data: ', data.keyword)
+      },
+      fail: function(xhr, msg){
+        //err here
+        console.log(msg)
       }
     })
   }
