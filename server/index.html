@@ -25,7 +25,6 @@
       method: 'get',
       dataType: 'json',
       success: function(data){
-        console.log(data);
         cb(data)
       },
       fail: function(xhr, msg){
@@ -43,6 +42,7 @@
       dataType: 'json',
       success: function(data){
         let restaurants = data.newrestaurant
+
         $("div.zomatoResult").empty();
         restaurants.forEach(r=>{
           // console.log(r);

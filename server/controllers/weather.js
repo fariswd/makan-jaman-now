@@ -9,6 +9,7 @@ function checkWeather(req,res) {
 		let keepWeather = result.body.split(" ");
 		let getWeather = false;
 		keepWeather.forEach((checkWeather,index) => {
+			console.log(result.body)
 			let weather = checkWeather.toLowerCase();
 			if(weather == "rain" || weather == "thunderstorms" && getWeather == false ){
 				getWeather = true;	
