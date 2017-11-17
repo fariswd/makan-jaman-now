@@ -42,19 +42,19 @@
       method: 'get',
       dataType: 'json',
       success: function(data){
-        let restaurants = data.restaurants
+        let restaurants = data.newrestaurant
         $("div.zomatoResult").empty();
         restaurants.forEach(r=>{
-          console.log(r);
-          getWeather(r.restaurant.location.latitude,r.restaurant.location.longitude, weather => {
+          // console.log(r);
+          getWeather(r.location.latitude,r.location.longitude, weather => {
           let panel = `
           <div class="container">
-            <img src="${r.restaurant.thumb}"><br>
-            Name: ${r.restaurant.name}<br>
-            Url: ${r.restaurant.url}<br>
-            Address: ${r.restaurant.location.address}<br>
-            Lat:  ${r.restaurant.location.latitude}<br>
-            Lng:  ${r.restaurant.location.longitude}<br>
+            <img src="${r.thumb}"><br>
+            Name: ${r.name}<br>
+            Url: ${r.url}<br>
+            Address: ${r.location.address}<br>
+            Lat:  ${r.location.latitude}<br>
+            Lng:  ${r.location.longitude}<br>
             Status: ${weather.message}
           </div>
           `
@@ -64,6 +64,12 @@
       },
       fail: function(xhr, msg){
         //err here
+        let panel = `
+        <div class="container">
+          OOPS Something wrong
+        </div>
+        `
+        $("div.zomatoResult").append(panel)
       }
     })
   }); 
